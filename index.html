@@ -1,39 +1,61 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>ATS Resume Score Calculator</title>
+
+<title>ATS Resume Analyzer</title>
+
 <link rel="stylesheet" href="style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-<h1>📄 ATS Resume Calculator</h1>
 
-<label>Paste Resume Text</label>
-
-<textarea id="resume"
-placeholder="Paste your resume content here..."></textarea>
+<h1>📄 ATS Resume Analyzer</h1>
 
 
-<label>Paste Job Description</label>
+<h3>Upload Resume PDF</h3>
 
-<textarea id="job"
-placeholder="Paste job description here..."></textarea>
+<input 
+type="file"
+id="resumeFile"
+accept=".pdf"
+/>
 
 
-<button onclick="calculateATS()">
-Calculate ATS Score
+
+<h3>Job Description</h3>
+
+<textarea 
+id="job"
+placeholder="Paste job description..."
+></textarea>
+
+
+
+<button onclick="analyze()">
+Analyze Resume
 </button>
+
 
 
 <div id="result"></div>
 
+
 </div>
+
 
 
 <script src="script.js"></script>
 
+
 </body>
+
 </html>
