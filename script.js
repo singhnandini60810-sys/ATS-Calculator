@@ -1,23 +1,78 @@
-function calculateATS(){
+async function readPDF(file){
 
 
-let resume =
-document.getElementById("resume")
-.value.toLowerCase();
+const pdfData =
+await file.arrayBuffer();
+
+
+const pdf =
+await pdfjsLib.getDocument({
+data:pdfData
+}).promise;
+
+
+let text="";
+
+
+for(
+let i=1;
+i<=pdf.numPages;
+i++
+){
+
+let page =
+await pdf.getPage(i);
+
+
+let content =
+await page.getTextContent();
+
+
+content.items.forEach(item=>{
+
+text += item.str + " ";
+
+});
+
+}
+
+
+return text.toLowerCase();
+
+}
+
+
+
+async function analyze(){
+
+
+let file =
+document.getElementById(
+"resumeFile"
+).files[0];
 
 
 let job =
-document.getElementById("job")
-.value.toLowerCase();
+document.getElementById(
+"job"
+).value.toLowerCase();
 
 
 
-if(resume=="" || job==""){
+if(!file || !job){
 
-alert("Please enter both fields");
+alert(
+"Upload PDF and add job description"
+);
+
 return;
 
 }
+
+
+
+let resume =
+await readPDF(file);
 
 
 
@@ -33,18 +88,18 @@ let skills=[
 "sql",
 "html",
 "css",
-"machine learning",
 "git",
 "docker",
 "aws",
-"c++"
+"machine learning",
+"c++",
+"typescript"
 
 ];
 
 
 
 let matched=[];
-
 let missing=[];
 
 
@@ -55,11 +110,14 @@ skills.forEach(skill=>{
 if(job.includes(skill)){
 
 
-    if(resume.includes(skill))
-        matched.push(skill);
+if(resume.includes(skill))
 
-    else
-        missing.push(skill);
+matched.push(skill);
+
+
+else
+
+missing.push(skill);
 
 
 }
@@ -75,32 +133,60 @@ matched.length + missing.length;
 
 
 let score =
-total===0 ? 0 :
-Math.round((matched.length/total)*100);
+total ?
+Math.round(
+matched.length/total*100
+)
+:0;
 
 
 
-document.getElementById("result").innerHTML=`
+document.getElementById(
+"result"
+).innerHTML=`
 
-<h2>ATS Score: ${score}%</h2>
+<h2>
+ATS Score: ${score}%
+</h2>
 
-<h3>✅ Matched Skills</h3>
 
-<p>${matched.join(", ") || "None"}</p>
+<h3>✅ Found Skills</h3>
+
+<p>
+${matched.join(", ") || "No matches"}
+</p>
+
 
 
 <h3>❌ Missing Skills</h3>
 
-<p>${missing.join(", ") || "None"}</p>
+<p>
+${missing.join(", ") || "None"}
+</p>
+
 
 
 <h3>💡 Suggestions</h3>
 
 <p>
-${score < 60 ?
-"Add missing technical skills and improve projects section":
-"Good resume match. Keep improving keywords."
+
+${
+score < 50 ?
+
+"Your resume needs more keywords related to this job."
+
+:
+
+score < 80 ?
+
+"Good match. Add missing skills."
+
+:
+
+"Excellent ATS compatibility."
+
 }
+
 </p>
 
 `;
