@@ -48,9 +48,26 @@ ATS-Calculator
    - Checks important keywords
    - Calculates ATS score
    - Shows missing skills
-
----
-
 ## ATS Score Logic
-
 The score is calculated by comparing:
+Matched Skills / Required Skills × 100
+Example:
+Job requires:
+Python
+React
+SQL
+Git
+Resume contains:
+Python
+React
+ATS Score:
+50%
+
+## Future Improvements
+
+- AI-based resume suggestions
+- Resume formatting analysis
+- Job role templates
+- Download ATS report as PDF
+- Skill charts
+- Resume history storage
