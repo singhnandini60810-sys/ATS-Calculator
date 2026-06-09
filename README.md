@@ -30,3 +30,27 @@ The project works completely on the frontend and can be hosted directly using Gi
 ---
 
 ## Project Structure
+ATS-Calculator
+│
+├── index.html
+├── style.css
+└── script.js
+
+---
+
+## How It Works
+
+1. Upload your resume PDF
+2. Paste the job description
+3. Click Analyze Resume
+4. The application:
+   - Reads resume text
+   - Checks important keywords
+   - Calculates ATS score
+   - Shows missing skills
+
+---
+
+## ATS Score Logic
+
+The score is calculated by comparing:
